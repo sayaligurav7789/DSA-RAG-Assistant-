@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSA Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-code"></i>
+                <span>DSA Assistant</span>
+            </div>
+            
+            <button class="new-chat-btn" id="new-chat-btn">
+                <i class="fas fa-plus"></i> New Chat
+            </button>
+            
+            <!-- SEARCH BAR -->
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-chats" placeholder="Search chats..." class="search-input">
+            </div>
+            
+            <div class="history-list" id="history-list">
+                <!-- History items -->
+            </div>
+            
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Sayali Gurav</span>
+                </div>
+            </div>
+        </aside>
+        
+        <main class="chat-area">
+            <header class="chat-header">
+                <h1>DSA Assistant</h1>
+                <button class="download-btn" id="download-chat-btn" title="Download chat">
+                    <i class="fas fa-download"></i>
+                </button>
+            </header>
+            
+            <div class="messages-container" id="messages-container">
+                <div class="welcome-screen" id="welcome-screen">
+                    <div class="logo">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h2>How can I help you today?</h2>
+                    <p>Ask me anything about Data Structures & Algorithms.</p>
+                </div>
+            </div>
+            
+            <footer class="chat-input-area">
+                <div class="input-wrapper">
+                    <textarea id="user-input" placeholder="Ask DSA question..." rows="1"></textarea>
+                    <button id="send-btn" disabled>
+                        <i class="fas fa-arrow-up"></i>
+                    </button>
+                </div>
+                <p class="disclaimer">
+                    Powered by AI • Answers are based on DSA (Karumanchi) textbook.
+                </p>
+            </footer>
+        </main>
+    </div>
+    
+    <div id="notification-container"></div>
+    
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+</body>
+</html>
