@@ -16,6 +16,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Load chat history from localStorage
     loadChatHistory();
 
+    // Display logged-in user's name
+    const userNameEl = document.getElementById('user-display-name');
+    if (userNameEl) {
+        const storedName = localStorage.getItem('nexabot_user');
+        if (storedName) userNameEl.textContent = storedName;
+    }
+
     // ====================================
     // SEARCH FUNCTIONALITY
     // ====================================
