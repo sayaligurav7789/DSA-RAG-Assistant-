@@ -20,12 +20,16 @@ export default function Register() {
     confirmPassword: ""
   });
 
-  // Handle input
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // Email Register
+  const saveUserAndRedirect = (user, overrideName) => {
+    const name = overrideName || user.displayName || user.email?.split("@")[0] || "User";
+    localStorage.setItem("nexabot_user", name);
+    window.location.href = "/dsa";
+  };
+
   const handleRegister = async (e) => {
     e.preventDefault();
 
@@ -35,33 +39,31 @@ export default function Register() {
     }
 
     try {
-      await createUserWithEmailAndPassword(
+      const result = await createUserWithEmailAndPassword(
         auth,
         form.email,
         form.password
       );
-      alert("Account Created Successfully 🚀");
-      navigate("/dashboard");
+      const fullName = [form.firstName, form.lastName].filter(Boolean).join(" ");
+      saveUserAndRedirect(result.user, fullName);
     } catch (error) {
       alert(error.message);
     }
   };
 
-  // Google Signup
   const handleGoogle = async () => {
     try {
-      await signInWithPopup(auth, googleProvider);
-      navigate("/dashboard");
+      const result = await signInWithPopup(auth, googleProvider);
+      saveUserAndRedirect(result.user);
     } catch (error) {
       console.log(error.message);
     }
   };
 
-  // GitHub Signup
   const handleGithub = async () => {
     try {
-      await signInWithPopup(auth, githubProvider);
-      navigate("/dashboard");
+      const result = await signInWithPopup(auth, githubProvider);
+      saveUserAndRedirect(result.user);
     } catch (error) {
       console.log(error.message);
     }
@@ -78,7 +80,6 @@ export default function Register() {
 
       <form onSubmit={handleRegister} className="auth-form">
 
-        {/* First + Last Name */}
         <div className="row">
           <div className="field">
             <label>First Name</label>
@@ -103,7 +104,6 @@ export default function Register() {
           </div>
         </div>
 
-        {/* Email */}
         <label>Email Address</label>
         <input
           type="email"
@@ -113,7 +113,6 @@ export default function Register() {
           required
         />
 
-        {/* Password */}
         <label>Password</label>
         <input
           type="password"
@@ -123,7 +122,6 @@ export default function Register() {
           required
         />
 
-        {/* Confirm Password */}
         <label>Confirm Password</label>
         <input
           type="password"
@@ -133,7 +131,6 @@ export default function Register() {
           required
         />
 
-        {/* Checkbox */}
         <label className="checkbox">
           <input type="checkbox" required />
           <span>
@@ -142,18 +139,15 @@ export default function Register() {
           </span>
         </label>
 
-        {/* Button */}
         <button className="primary-btn full">
           Create My Account →
         </button>
       </form>
 
-      {/* Divider */}
       <div className="divider">
         <span>or sign up with</span>
       </div>
 
-      {/* Social */}
       <div className="social-buttons modern">
         <button onClick={handleGoogle}>
           <FcGoogle size={18} />
@@ -166,7 +160,6 @@ export default function Register() {
         </button>
       </div>
 
-      {/* Switch */}
       <p className="switch">
         Already have an account?{" "}
         <span onClick={() => navigate("/login")}>

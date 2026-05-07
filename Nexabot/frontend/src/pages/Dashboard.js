@@ -1,15 +1,13 @@
-import React from "react";
-import Navbar from "../components/Navbar";   // ✅ correct import
+import React, { useEffect } from "react";
 
 export default function Dashboard() {
-  return (
-    <div>
-      <Navbar />
+  useEffect(() => {
+    window.location.href = "/dsa";
+  }, []);
 
-      <div style={{ padding: "40px", color: "white" }}>
-        <h1>Welcome to Dashboard 🚀</h1>
-        <p>Your DSA RAG Assistant will be here.</p>
-      </div>
+  return (
+    <div style={{ background: "#000010", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", color: "white" }}>
+      <p>Redirecting to DSA Assistant...</p>
     </div>
   );
 }

@@ -15,32 +15,35 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // 🔐 Email Login
+  const saveUserAndRedirect = (user) => {
+    const name = user.displayName || user.email?.split("@")[0] || "User";
+    localStorage.setItem("nexabot_user", name);
+    window.location.href = "/dsa";
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate("/dashboard");
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      saveUserAndRedirect(result.user);
     } catch (error) {
       alert(error.message);
     }
   };
 
-  // 🔵 Google Login
   const handleGoogle = async () => {
     try {
-      await signInWithPopup(auth, googleProvider);
-      navigate("/dashboard");
+      const result = await signInWithPopup(auth, googleProvider);
+      saveUserAndRedirect(result.user);
     } catch (error) {
       console.log(error.message);
     }
   };
 
-  // ⚫ GitHub Login
   const handleGithub = async () => {
     try {
-      await signInWithPopup(auth, githubProvider);
-      navigate("/dashboard");
+      const result = await signInWithPopup(auth, githubProvider);
+      saveUserAndRedirect(result.user);
     } catch (error) {
       console.log(error.message);
     }
@@ -55,7 +58,6 @@ export default function Login() {
 
         <form onSubmit={handleLogin} className="auth-form">
 
-          {/* EMAIL */}
           <label>Email Address</label>
           <input
             type="email"
@@ -65,7 +67,6 @@ export default function Login() {
             required
           />
 
-          {/* PASSWORD */}
           <label>Password</label>
           <input
             type="password"
@@ -82,12 +83,10 @@ export default function Login() {
           </button>
         </form>
 
-        {/* DIVIDER */}
         <div className="divider">
           <span>or continue with</span>
         </div>
 
-        {/* SOCIAL LOGIN */}
         <div className="social-buttons modern">
           <button onClick={handleGoogle}>
             <FcGoogle size={20} />
@@ -100,7 +99,6 @@ export default function Login() {
           </button>
         </div>
 
-        {/* SWITCH */}
         <p className="link">
           Don't have an account?{" "}
           <span onClick={() => navigate("/register")}>

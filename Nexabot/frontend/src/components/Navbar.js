@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { FaCode } from "react-icons/fa";
 import "../styles.css";
 
 export default function Navbar() {
@@ -7,13 +8,15 @@ export default function Navbar() {
 
   return (
     <nav className="navbar">
-      <h2 className="logo">NexaBot</h2>
+      <div className="nav-logo" onClick={() => navigate("/")}>
+        <FaCode className="nav-logo-icon" />
+        <span>NexaBot</span>
+      </div>
 
-      <div>
+      <div className="nav-actions">
         <button className="nav-btn" onClick={() => navigate("/login")}>
           Log in
         </button>
-
         <button className="nav-btn primary" onClick={() => navigate("/register")}>
           Sign up
         </button>
